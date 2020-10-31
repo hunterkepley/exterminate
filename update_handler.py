@@ -6,7 +6,7 @@ def update_game(g, dt):
         if event.type == pygame.QUIT:
             g.running = False
     
-    game_handler.person.Person.update_people(g, dt)
+    game_handler.bug.Bug.update_bugs(g, dt)
 
     # FPS Printing
     #print(g.clock.get_fps())

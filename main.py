@@ -1,5 +1,5 @@
 import pygame
-import person
+import bug
 import game_handler as game
 
 """

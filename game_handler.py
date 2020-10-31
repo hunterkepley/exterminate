@@ -1,7 +1,7 @@
 import pygame
 import update_handler as u
 import render_handler as r
-import person
+import bug
 
 
 class Game():
@@ -15,10 +15,10 @@ class Game():
         self.WHITE = (255, 255, 255)
         self.BLUEGRAY = (0, 0, 10)
 
-        self.person_list = []
+        self.bug_list = []
 
     def init_game_objects(self):
-        person.Person.init_people(self)
+        bug.Bug.init_bugs(self)
 
     def run_game(self):
         dt = self.clock.tick(self.FPS) / 1000  # good ol' dt
