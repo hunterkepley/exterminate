@@ -7,3 +7,6 @@ def update_game(g, dt):
             g.running = False
     
     game_handler.person.Person.update_people(g, dt)
+
+    # FPS Printing
+    #print(g.clock.get_fps())
