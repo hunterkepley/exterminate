@@ -32,7 +32,7 @@ class Sprayer():
 
             i.v+=1
 
-            center = i.top_image.get_rect().center
+            center = i.top_rect.center
             rotated_top_image = pygame.transform.rotate(i.top_image, i.v)
             new_rect = rotated_top_image.get_rect(center = center)
 
