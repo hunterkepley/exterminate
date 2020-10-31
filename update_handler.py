@@ -8,5 +8,7 @@ def update_game(g, dt):
     
     game_handler.bug.Bug.update_bugs(g, dt)
 
+    game_handler.sprayer.Sprayer.update_sprayers(g, dt)
+
     # FPS Printing
     #print(g.clock.get_fps())

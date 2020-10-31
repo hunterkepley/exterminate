@@ -2,7 +2,7 @@ import pygame
 import update_handler as u
 import render_handler as r
 import bug
-import swatter
+import sprayer
 
 
 class Game():
@@ -20,7 +20,7 @@ class Game():
         self.bg = pygame.image.load("./Assets/bg.png")
 
         self.bug_list = []
-        self.swatter_list = []
+        self.sprayer_list = []
 
     def init_game_objects(self):
         bug.Bug.init_bugs(self)

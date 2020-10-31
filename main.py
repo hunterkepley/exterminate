@@ -1,5 +1,6 @@
 import pygame
 import bug
+import sprayer
 import game_handler as game
 
 """
@@ -20,6 +21,8 @@ def main():
     g = game.Game()
 
     g.init_game_objects()
+
+    sprayer.Sprayer.spawn_sprayer(g, [0, 0])
 
     while g.running:
         
