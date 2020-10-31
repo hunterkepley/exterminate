@@ -7,11 +7,11 @@ class Sprayer():
         self.base_rect = self.base_image.get_rect()
         self.top_rect = self.top_image.get_rect()
         self.base_rect.move_ip(*position)
-        self.top_rect = self.base_rect
+        self.top_rect.move_ip(*position)
         self.v = 0
 
     def update(self, dt):
-        print("test")
+        print('',end='')
 
 
     # Static methods
