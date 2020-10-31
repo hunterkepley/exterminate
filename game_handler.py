@@ -13,12 +13,12 @@ class Game():
 
         self.BLACK = (0, 0, 0)
         self.WHITE = (255, 255, 255)
-        self.BLUEGRAY = (100, 100, 150)
+        self.BLUEGRAY = (0, 0, 10)
 
         self.person_list = []
 
     def init_game_objects(self):
-        person.init_people(self)
+        person.Person.init_people(self)
 
     def run_game(self):
         dt = self.clock.tick(self.FPS) / 1000  # good ol' dt

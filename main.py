@@ -19,7 +19,7 @@ def main():
 
     g = game.Game()
 
-    person.Person.init_people(g)
+    g.init_game_objects()
 
     while g.running:
         
