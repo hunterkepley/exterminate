@@ -2,6 +2,7 @@ import pygame
 import update_handler as u
 import render_handler as r
 import bug
+import swatter
 
 
 class Game():
@@ -14,8 +15,12 @@ class Game():
         self.BLACK = (0, 0, 0)
         self.WHITE = (255, 255, 255)
         self.BLUEGRAY = (0, 0, 10)
+        self.BROWN = (150, 125, 100)
+
+        self.bg = pygame.image.load("./Assets/bg.png")
 
         self.bug_list = []
+        self.swatter_list = []
 
     def init_game_objects(self):
         bug.Bug.init_bugs(self)
