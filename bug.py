@@ -21,8 +21,8 @@ class Bug():
             pygame.Rect(464, 508, 40, 40), # 2
             pygame.Rect(406, 701, 40, 40), # 3
             pygame.Rect(753, 622, 40, 40), # 4
-            pygame.Rect(741, 286, 40, 40), # 5
-            pygame.Rect(553, 337, 40, 40), # 6
+            pygame.Rect(741, 276, 40, 40), # 5
+            pygame.Rect(553, 317, 40, 60), # 6
             pygame.Rect(567, 516, 40, 40), # 7
             pygame.Rect(882, 462, 40, 40), # 8
             pygame.Rect(1006, 78, 40, 20), # 9
@@ -30,26 +30,16 @@ class Bug():
             pygame.Rect(0, 0, 0, 0)
         ]
 
-        self.direction = 0 # 0 = left, 1 = up, 2 = right, 3 = down
+        self.direction = 2 # 0 = left, 1 = up, 2 = right, 3 = down
 
         # Slow down from glue
         self.slowed_down = False
-        self.speed_change = self.speed/2
-        self.slow_down_timer = 30
+        self.speed_change = 3
+        self.slow_down_timer = 60
         self.slow_down_timer_max = self.slow_down_timer
 
     def update(self, dt):
 
-        # Decide direction
-        if self.velocity[0] > 0:
-            self.direction = 2
-        elif self.velocity[1] < 0:
-            self.direction = 0
-
-        if self.velocity[1] > 0:
-            self.direction = 1
-        elif self.velocity[1] < 0:
-            self.direction = 3
 
         if self.checkpoint == len(self.checkpoints)-1: # if at pumpkin
             print("end")
@@ -74,8 +64,8 @@ class Bug():
             self.checkpoint += 1
 
             # Calculate movement using an imaginary vector :)
-            dx = self.checkpoints[self.checkpoint].left-self.checkpoints[self.checkpoint-1].left
-            dy = self.checkpoints[self.checkpoint].top-self.checkpoints[self.checkpoint-1].top
+            dx = self.checkpoints[self.checkpoint].left-self.position[0]
+            dy = self.checkpoints[self.checkpoint].top-self.position[1]
 
             ln = math.sqrt(dx*dx+dy*dy)
 
@@ -83,6 +73,25 @@ class Bug():
             dy /= ln
 
             self.velocity_dir = [dx, dy]
+
+            # Decide direction
+            d = {
+                0: 2,
+                1: 2,
+                2: 1,
+                3: 1,
+                4: 2,
+                5: 3,
+                6: 0,
+                7: 1,
+                8: 2,
+                9: 3,
+                10: 0,
+                11: 0,
+            }
+
+            self.direction = d[self.checkpoint]
+
 
 
     def slow_down(self):
