@@ -1,5 +1,6 @@
 import pygame
 import math
+import random
 
 class Sprayer():
     def __init__(self, position):
@@ -15,17 +16,17 @@ class Sprayer():
         self.rotation = 0
 
         self.poison_clouds = []
-        self.sprayTimer = 10
-        self.sprayTimerMax = self.sprayTimer
+        self.spray_timer = 3
+        self.spray_timer_max = self.spray_timer
 
     def update(self, g, dt):
         self.spray(g)
 
     def spray(self, g):
-        self.sprayTimer -= 1
-        if self.sprayTimer <= 0:
+        self.spray_timer -= 1
+        if self.spray_timer <= 0:
             self.poison_clouds.append(PoisonCloud(self.rotation, [self.base_rect.left, self.base_rect.top]))
-            self.sprayTimer = self.sprayTimerMax
+            self.spray_timer = self.spray_timer_max
 
     # Static methods
 
@@ -48,7 +49,7 @@ class Sprayer():
         for i in g.sprayer_list:
             g.screen.blit(i.base_image, i.base_rect)
 
-            i.rotation+=1
+            i.rotation+=10
 
             center = i.top_rect.center
             rotated_top_image = pygame.transform.rotate(i.top_image, i.rotation)
@@ -57,21 +58,25 @@ class Sprayer():
             g.screen.blit(rotated_top_image, new_rect)
 
             for j in i.poison_clouds:
-                g.screen.blit(j.image, j.rect)
+                center = i.top_rect.center
+                rotated_image = pygame.transform.rotate(j.image, j.rotation)
+                g.screen.blit(rotated_image, j.rect)
 
 class PoisonCloud():
     def __init__(self, angle, position):
-        self.image = pygame.image.load("./Assets/selector.png")
+        self.image = pygame.image.load("./Assets/poison.png")
         self.rect = self.image.get_rect()
         self.rect.move_ip(position)
-        self.move_speed = 150
+        self.move_speed = 200
         self.angle = angle
         self.moved = 0
         self.range = 30
         self.remove = False
+        self.rotation = random.randint(0, 360)
 
     def update(self, dt):
-        self.rect.move_ip([(self.move_speed * math.sin(self.angle)) * dt, (self.move_speed * math.cos(self.angle)) * dt])
+        a = self.angle-100
+        self.rect.move_ip([self.move_speed * dt * math.sin((math.pi/180)*a), self.move_speed * dt * math.cos((math.pi/180)*a)])
         self.moved += 1
         if self.moved > self.range:
             self.remove = True
