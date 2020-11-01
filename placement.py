@@ -10,6 +10,7 @@ class Placer():
         self.objects = [
             'sprayer',
             'sticky_pad',
+            'bear_trap'
         ]
 
     def update(self, g, dt):

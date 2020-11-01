@@ -7,6 +7,7 @@ import sprayer
 import placement
 import sticky_pad
 import money
+import bear_trap
 
 
 class Game():
@@ -38,6 +39,7 @@ class Game():
         self.bug_list = []
         self.sprayer_list = []
         self.sticky_pads = []
+        self.bear_traps = []
 
         self.placer = placement.Placer()
         self.placing = True

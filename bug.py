@@ -2,7 +2,7 @@ import pygame
 import random
 import math
 
-bug_images = ["./Assets/fly.png", "./Assets/ladybug.png", "./Assets/snail.png"]
+bug_images = ["./Assets/fly.png", "./Assets/ladybug.png", "./Assets/snail.png", "./Assets/worm.png"]
 
 class Bug():
     def __init__(self, position, velocity_dir):
@@ -18,7 +18,8 @@ class Bug():
         self.health_values = {
             0: 8,
             1: 6,
-            2: 4
+            2: 4,
+            3: 7,
         }
         self.health = self.health_values[self.random_image_number]
         self.money = int(self.health/2)

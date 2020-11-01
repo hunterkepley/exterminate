@@ -16,10 +16,16 @@ def update_game(g, dt):
                     if g.store.money >= g.store.prices['stickypad']:
                         game_handler.sticky_pad.StickyPad.spawn_sticky_pad(g, g.placer.position)
                         g.store.money -= g.store.prices['stickypad']
+                elif g.placer.object == 2:
+                    if g.store.money >= g.store.prices['beartrap']:
+                        game_handler.bear_trap.BearTrap.spawn_bear_trap(g, g.placer.position)
+                        g.store.money -= g.store.prices['beartrap']
+
         if event.type == pygame.KEYDOWN:
             object_images = {
                 0: './Assets/object_sprayer.png',
-                1: './Assets/object_gluepad.png'
+                1: './Assets/object_gluepad.png',
+                2: './Assets/object_beartrap.png'
             }
             if event.key == pygame.K_LEFT and g.placer.object > 0:
                 g.placer.object -= 1
@@ -39,6 +45,8 @@ def update_game(g, dt):
 
     game_handler.sticky_pad.StickyPad.update_sticky_pads(g, dt)
 
+    game_handler.bear_trap.BearTrap.update_bear_traps(g, dt)
+
     game_handler.bug.Bug.bug_spawn_handler(g)
 
     # Reset game!
@@ -46,6 +54,7 @@ def update_game(g, dt):
         g.bug_list = []
         g.sprayer_list = []
         g.sticky_pads = []
+        g.bear_traps = []
         g.score = 0
         g.pumpkin_health = 10
         g.store.money = 50

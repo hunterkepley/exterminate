@@ -7,6 +7,7 @@ def render_game(g):
 
 
     game_handler.sticky_pad.StickyPad.render_sticky_pads(g)
+    game_handler.bear_trap.BearTrap.render_bear_traps(g)
     game_handler.bug.Bug.render_bugs(g)
     game_handler.sprayer.Sprayer.render_sprayers(g)
 
