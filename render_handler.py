@@ -23,4 +23,9 @@ def render_game(g):
     g.screen.blit(t, (345, 70))
     t = g.game_font.render("Score: {}".format(g.score), False, (255, 255, 255))
     g.screen.blit(t, (0, 20))
+    if g.pumpkin_health <= 0:
+        t = g.game_font.render("Restart?", False, (255, 50, 50))
+        g.screen.blit(t, (g.screen_size[0]/2-30, g.screen_size[1]/2))
+        t = g.game_font.render("[Press ENTER]", False, (255, 50, 50))
+        g.screen.blit(t, (g.screen_size[0]/2-50, g.screen_size[1]/2+20))
     

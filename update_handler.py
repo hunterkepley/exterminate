@@ -26,6 +26,9 @@ def update_game(g, dt):
             elif event.key == pygame.K_RIGHT and g.placer.object < len(g.placer.objects)-1:
                 g.placer.object += 1
             g.object_image = pygame.image.load(object_images[g.placer.object])
+
+            if event.key == pygame.K_RETURN and g.pumpkin_health <= 0:
+                g.restart = True
     
     if g.placing:
         g.placer.update(g, dt)
@@ -37,6 +40,17 @@ def update_game(g, dt):
     game_handler.sticky_pad.StickyPad.update_sticky_pads(g, dt)
 
     game_handler.bug.Bug.bug_spawn_handler(g)
+
+    # Reset game!
+    if g.pumpkin_health <= 0 and g.restart:
+        g.bug_list = []
+        g.sprayer_list = []
+        g.sticky_pads = []
+        g.score = 0
+        g.pumpkin_health = 10
+        g.store.money = 50
+        g.in_game = False
+        g.restart = False
 
     # FPS Printing
     #print(g.clock.get_fps())

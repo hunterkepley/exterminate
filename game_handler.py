@@ -46,6 +46,7 @@ class Game():
         self.store = money.Store()
 
         self.pumpkin_health = 10
+        self.restart = False
         self.score = 0
 
         # Font

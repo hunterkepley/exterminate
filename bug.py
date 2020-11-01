@@ -9,11 +9,6 @@ class Bug():
         self.random_image_number = random.randint(0, len(bug_images)-1)
         self.image = pygame.image.load(bug_images[self.random_image_number])
         self.rect = self.image.get_rect()
-        self.speed_values = {
-            0: 3,
-            1: 2,
-            2: 1,
-        }
         self.speed = 3
         self.velocity_dir = velocity_dir
         self.velocity = [self.speed*velocity_dir[0], self.speed*velocity_dir[1]]
@@ -48,7 +43,7 @@ class Bug():
 
         # Slow down from glue
         self.slowed_down = False
-        self.speed_change = 3
+        self.speed_change = 1.5
         self.slow_down_timer = 60
         self.slow_down_timer_max = self.slow_down_timer
 
