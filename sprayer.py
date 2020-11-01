@@ -16,7 +16,7 @@ class Sprayer():
         self.rotation = 0
 
         self.poison_clouds = []
-        self.spray_timer = 3
+        self.spray_timer = 10
         self.spray_timer_max = self.spray_timer
 
     def update(self, g, dt):
@@ -39,7 +39,7 @@ class Sprayer():
         for i in g.sprayer_list:
             i.update(g, dt)
             for j in i.poison_clouds:
-                j.update(dt)
+                j.update(g, dt)
                 if j.remove:
                     i.poison_clouds.remove(j)
                     
@@ -49,7 +49,7 @@ class Sprayer():
         for i in g.sprayer_list:
             g.screen.blit(i.base_image, i.base_rect)
 
-            i.rotation+=10
+            i.rotation+=5
 
             center = i.top_rect.center
             rotated_top_image = pygame.transform.rotate(i.top_image, i.rotation)
@@ -73,10 +73,20 @@ class PoisonCloud():
         self.range = 30
         self.remove = False
         self.rotation = random.randint(0, 360)
+        self.health = 3
 
-    def update(self, dt):
+    def update(self, g, dt):
         a = self.angle-100
         self.rect.move_ip([self.move_speed * dt * math.sin((math.pi/180)*a), self.move_speed * dt * math.cos((math.pi/180)*a)])
         self.moved += 1
+
         if self.moved > self.range:
+            self.remove = True
+        
+        for b in g.bug_list:
+            if b.rect.colliderect(self.rect) and self.health >= 0:
+                b.health -= 1
+                self.health -= 1
+        
+        if self.health <= 0:
             self.remove = True

@@ -12,4 +12,11 @@ def render_game(g):
 
     if g.placing:
         g.placer.render(g)
+
+        object_rect = g.object_image.get_rect()
+        object_rect.left = g.screen_size[0]/2-50
+        g.screen.blit(g.object_image, object_rect)
+
+    t = g.game_font.render("Money: {}".format(g.store.money), False, (0, 0, 0))
+    g.screen.blit(t, (0,0))
     

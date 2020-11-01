@@ -6,6 +6,12 @@ class Placer():
         self.rect = self.image.get_rect()
         self.position = [0, 0] # Position of object to be placed
 
+        self.object = 0 # 0 = sprayer, 1 = sticky pad, 2 = bear trap
+        self.objects = [
+            'sprayer',
+            'sticky_pad',
+        ]
+
     def update(self, g, dt):
         self.rect.left = pygame.mouse.get_pos()[0]-20
         self.rect.top = pygame.mouse.get_pos()[1]-20

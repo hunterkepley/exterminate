@@ -6,13 +6,27 @@ bug_images = ["./Assets/fly.png", "./Assets/ladybug.png", "./Assets/snail.png"]
 
 class Bug():
     def __init__(self, position, velocity_dir):
-        self.image = pygame.image.load(bug_images[random.randint(0, len(bug_images)-1)])
+        self.random_image_number = random.randint(0, len(bug_images)-1)
+        self.image = pygame.image.load(bug_images[self.random_image_number])
         self.rect = self.image.get_rect()
-        self.speed = 10
+        self.speed_values = {
+            0: 3,
+            1: 2,
+            2: 1,
+        }
+        self.speed = 3
         self.velocity_dir = velocity_dir
         self.velocity = [self.speed*velocity_dir[0], self.speed*velocity_dir[1]]
         self.rect.move_ip(*position)
         self.position = position
+
+        self.health_values = {
+            0: 8,
+            1: 6,
+            2: 4
+        }
+        self.health = self.health_values[self.random_image_number]
+        self.money = int(self.health/2)
 
         self.checkpoint = 0 # movement checkout
         self.checkpoints = [
@@ -63,34 +77,34 @@ class Bug():
         if self.checkpoints[self.checkpoint].colliderect(self.rect):
             self.checkpoint += 1
 
-            # Calculate movement using an imaginary vector :)
-            dx = self.checkpoints[self.checkpoint].left-self.position[0]
-            dy = self.checkpoints[self.checkpoint].top-self.position[1]
+        # Calculate movement using an imaginary vector :)
+        dx = self.checkpoints[self.checkpoint].left-self.position[0]
+        dy = self.checkpoints[self.checkpoint].top-self.position[1]
 
-            ln = math.sqrt(dx*dx+dy*dy)
+        ln = math.sqrt(dx*dx+dy*dy)
 
-            dx /= ln
-            dy /= ln
+        dx /= ln
+        dy /= ln
 
-            self.velocity_dir = [dx, dy]
+        self.velocity_dir = [dx, dy]
 
-            # Decide direction
-            d = {
-                0: 2,
-                1: 2,
-                2: 1,
-                3: 1,
-                4: 2,
-                5: 3,
-                6: 0,
-                7: 1,
-                8: 2,
-                9: 3,
-                10: 0,
-                11: 0,
-            }
+        # Decide direction
+        d = {
+            0: 2,
+            1: 2,
+            2: 1,
+            3: 1,
+            4: 2,
+            5: 3,
+            6: 0,
+            7: 1,
+            8: 2,
+            9: 3,
+            10: 0,
+            11: 0,
+        }
 
-            self.direction = d[self.checkpoint]
+        self.direction = d[self.checkpoint]
 
 
 
@@ -107,10 +121,19 @@ class Bug():
     @staticmethod
     def bug_spawn_handler(g):
         g.bug_spawn_timer -= 1
-        if g.bug_spawn_timer < 0:
-            Bug.spawn_bug(g, [-5, 366], [1, -0.5])
-            g.bug_spawn_timer_max -= 1
-            g.bug_spawn_timer = g.bug_spawn_timer_max
+        g.bug_spawn_offset -= 1
+        if g.bug_spawn_offset <= 0 and g.bug_spawn_timer <= 0:
+            if g.bug_spawn_offset <= 0:
+                Bug.spawn_bug(g, [-5, 366], [1, -0.5])
+                g.bug_wave_amount -= 1
+                g.bug_spawn_offset = g.bug_spawn_offset_max
+
+            if g.bug_wave_amount <= 0:
+                g.bug_spawn_timer = g.bug_spawn_timer_max
+                g.bug_spawn_timer_max -= 5
+
+                g.bug_wave_amount_max += random.randint(0, 1)
+                g.bug_wave_amount = g.bug_wave_amount_max
 
     @staticmethod
     def spawn_bug(g, position, velocity_dir):
@@ -120,6 +143,9 @@ class Bug():
     def update_bugs(g, dt):
         for i in g.bug_list:
             i.update(dt)
+            if i.health <= 0:
+                g.store.money += i.money
+                g.bug_list.remove(i)
 
     @staticmethod
     def render_bugs(g):
