@@ -60,6 +60,7 @@ def update_game(g, dt):
         g.store.money = 50
         g.in_game = False
         g.restart = False
+        g.spawn_wave_amount = 1
 
     # FPS Printing
     #print(g.clock.get_fps())
