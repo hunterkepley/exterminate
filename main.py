@@ -20,8 +20,6 @@ def main():
 
     g = game.Game()
 
-    g.init_game_objects()
-
     while g.running:
         
         g.run_game()

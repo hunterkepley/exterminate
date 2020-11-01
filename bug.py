@@ -39,7 +39,7 @@ class Bug():
             pygame.Rect(553, 317, 40, 60), # 6
             pygame.Rect(567, 516, 40, 40), # 7
             pygame.Rect(882, 462, 40, 40), # 8
-            pygame.Rect(1006, 78, 40, 20), # 9
+            pygame.Rect(1020, 78, 40, 20), # 9
             pygame.Rect(335, 71, 70, 100), # Pumpkin!
             pygame.Rect(0, 0, 0, 0)
         ]
@@ -52,11 +52,13 @@ class Bug():
         self.slow_down_timer = 60
         self.slow_down_timer_max = self.slow_down_timer
 
+        self.reached_end = False
+
     def update(self, dt):
 
 
         if self.checkpoint == len(self.checkpoints)-1: # if at pumpkin
-            print("end")
+            self.reached_end = True
         else:
             self.follow_path()
             self.velocity = [self.speed*self.velocity_dir[0], self.speed*self.velocity_dir[1]]
@@ -76,6 +78,9 @@ class Bug():
     def follow_path(self):
         if self.checkpoints[self.checkpoint].colliderect(self.rect):
             self.checkpoint += 1
+
+        if self.checkpoint == 11:
+            self.reached_end = True
 
         # Calculate movement using an imaginary vector :)
         dx = self.checkpoints[self.checkpoint].left-self.position[0]
@@ -138,6 +143,7 @@ class Bug():
     @staticmethod
     def spawn_bug(g, position, velocity_dir):
         g.bug_list.append(Bug(position, velocity_dir))
+        g.score += 1
 
     @staticmethod
     def update_bugs(g, dt):
@@ -145,6 +151,9 @@ class Bug():
             i.update(dt)
             if i.health <= 0:
                 g.store.money += i.money
+                g.bug_list.remove(i)
+            if i.reached_end:
+                g.pumpkin_health -= 1
                 g.bug_list.remove(i)
 
     @staticmethod

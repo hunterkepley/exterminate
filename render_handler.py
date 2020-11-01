@@ -19,4 +19,8 @@ def render_game(g):
 
     t = g.game_font.render("Money: {}".format(g.store.money), False, (0, 0, 0))
     g.screen.blit(t, (0,0))
+    t = g.game_font.render("{}".format(g.pumpkin_health), False, (0, 0, 0))
+    g.screen.blit(t, (345, 70))
+    t = g.game_font.render("Score: {}".format(g.score), False, (255, 255, 255))
+    g.screen.blit(t, (0, 20))
     

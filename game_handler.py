@@ -46,15 +46,13 @@ class Game():
         self.store = money.Store()
 
         self.pumpkin_health = 10
+        self.score = 0
 
         # Font
         pygame.font.init()
         self.game_font = pygame.font.SysFont('Comic Sans MS', 30) # i promise it doesnt look like it
 
         self.in_game = False
-
-    def init_game_objects(self):
-        print("Should init the food")
 
     def run_game(self):
         dt = self.clock.tick(self.FPS) / 1000  # good ol' dt
