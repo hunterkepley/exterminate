@@ -1,4 +1,5 @@
 import pygame
+import math
 
 class Sprayer():
     def __init__(self, position):
@@ -14,14 +15,17 @@ class Sprayer():
         self.rotation = 0
 
         self.poison_clouds = []
-        self.sprayTimer = 5
+        self.sprayTimer = 10
         self.sprayTimerMax = self.sprayTimer
 
     def update(self, g, dt):
         self.spray(g)
 
     def spray(self, g):
-        self.poison_clouds.append(PoisonCloud(self.base_rect.center))
+        self.sprayTimer -= 1
+        if self.sprayTimer <= 0:
+            self.poison_clouds.append(PoisonCloud(self.rotation, [self.base_rect.left, self.base_rect.top]))
+            self.sprayTimer = self.sprayTimerMax
 
     # Static methods
 
@@ -35,6 +39,9 @@ class Sprayer():
             i.update(g, dt)
             for j in i.poison_clouds:
                 j.update(dt)
+                if j.remove:
+                    i.poison_clouds.remove(j)
+                    
 
     @staticmethod
     def render_sprayers(g):
@@ -53,11 +60,18 @@ class Sprayer():
                 g.screen.blit(j.image, j.rect)
 
 class PoisonCloud():
-    def __init__(self, position):
+    def __init__(self, angle, position):
         self.image = pygame.image.load("./Assets/selector.png")
         self.rect = self.image.get_rect()
         self.rect.move_ip(position)
-        self.move_speed = 1
+        self.move_speed = 150
+        self.angle = angle
+        self.moved = 0
+        self.range = 30
+        self.remove = False
 
     def update(self, dt):
-        self.rect.move_ip([self.move_speed, self.move_speed])
+        self.rect.move_ip([(self.move_speed * math.sin(self.angle)) * dt, (self.move_speed * math.cos(self.angle)) * dt])
+        self.moved += 1
+        if self.moved > self.range:
+            self.remove = True

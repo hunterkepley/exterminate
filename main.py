@@ -22,8 +22,6 @@ def main():
 
     g.init_game_objects()
 
-    sprayer.Sprayer.spawn_sprayer(g, [0, 0])
-
     while g.running:
         
         g.run_game()
