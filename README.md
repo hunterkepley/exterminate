@@ -10,4 +10,4 @@ Bug tower defense game with several towers, bug types, and UI
 
 Made using Pygame
 
-![screenshot 1](http://screenshots/1.png)
+![screenshot 1](/screenshots/1.png)
