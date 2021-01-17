@@ -6,20 +6,8 @@
 
 Game Jam theme: Terminate
 
-### How to play
+Bug tower defense game with several towers, bug types, and UI
 
-- Download (and extract) source code
+Made using Pygame
 
-- Download Python (3+ is what I used to make)
-
-- Install Pygame using pip `pip install pygame`
-
-`py -m pip install pygame` <- Windows
-
-`python -m pip install pygame` <- Mac/Linux
-
-- Run it
-
-`py main.py` <- Windows
-
-`python main.py` <- Mac/Linux
+![screenshot 1](http://screenshots/1.png)
